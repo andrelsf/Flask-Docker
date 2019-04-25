@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Docker and Python</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="navbar navbar-inverse bg-primary navbar-fixed-top" style="background-color: black">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Docker and Python</a>
+      </div>
+      <!--<div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="about">About</a></li>
+          <li><a href="contact">Contact</a></li>
+        </ul>
+      </div>--><!--/.nav-collapse -->
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="container">
+    <div class="container">
+      <table class="table">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Image</th>
+          <th scope="col">Description</th>
+          <th scope="col">State</th>
+          <!-- <th scope="col">Action</th> -->
+          <!-- <th scope="col">description</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        {% if conteiners %}
+            {% for conteiner in conteiners %}
+            <tr class="p-3 mb-2 bg-light text-dark">
+                <td scope="row">{{ conteiner['Names'][0].strip('/') }}</td>
+                <td>{{ conteiner['Image'] }}</td>
+                <td>
+                  Vendor: {{ conteiner['Labels'].get(conteiner['Names'][0].strip('/') +'.vendor') }}<br>
+                  Description: {{ conteiner['Labels'].get(conteiner['Names'][0].strip('/') +'.description') }}<br>
+                </td>
+                <td>{% if conteiner['State'] == "running" %}
+                    <button type="button" class="btn btn-success btn-sm" disabled>Running</button>
+                  {% else %}
+                    <input class="btn btn-danger btn-sm" type="button" value="Stopped" disabled>
+                  {% endif %}</td>  
+            </tr>
+            {% endfor %}
+            <div class="alert alert-success" role="alert">
+                Containers is running!
+            </div>
+          {% else %}
+          <div class="alert alert-warning" role="alert">
+              Nothing here!
+            </div>
+        {% endif %}
+        
+    </div>
+  </div>
+  </body>
+</html>
