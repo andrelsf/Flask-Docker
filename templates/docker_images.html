@@ -40,34 +40,27 @@
       <table class="table">
         <thead class="thead-dark">
         <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Image</th>
-          <th scope="col">Description</th>
-          <th scope="col">State</th>
+          <th scope="col">RepoTags</th>
+          <th scope="col">Vendor</th>
+          <th scope="col">Size</th>
+          <!-- <th scope="col">Description</th> -->
           <!-- <th scope="col">Action</th> -->
           <!-- <th scope="col">description</th>-->
         </tr>
         </thead>
         <tbody>
-        {% if conteiners %}
-            {% for conteiner in conteiners %}
+        {% if images %}
+            {% for image in images %}
             <tr class="p-3 mb-2 bg-light text-dark">
-                <td scope="row">{{ conteiner['Names'][0].strip('/') }}</td>
-                <td>{{ conteiner['Image'] }}</td>
-                <td>
-                  <b>Vendor:</b> {{ conteiner['Labels'].get(conteiner['Names'][0].strip('/') +'.vendor') }}<br>
-                  Description: {{ conteiner['Labels'].get(conteiner['Names'][0].strip('/') +'.description') }}<br>
-                </td>
-                <td>{% if conteiner['State'] == "running" %}
-                    <button type="button" class="btn btn-success btn-sm" disabled>Running</button>
-                  {% else %}
-                    <input class="btn btn-danger btn-sm" type="button" value="Stopped" disabled>
-                  {% endif %}</td>  
+                <td scope="row">{{ image['RepoTags'][0] }}</td>
+                <td>{{ image['Labels'] }}</td>
+                <td>{{ image['Size'] }}</td>
+                <td></td>  
             </tr>
             {% endfor %}
-            <div class="alert alert-success" role="alert">
+            <!-- <div class="alert alert-success" role="alert">
                 Containers is running!
-            </div>
+            </div> -->
         {% else %}
           <div class="alert alert-warning" role="alert">
               Nothing here!

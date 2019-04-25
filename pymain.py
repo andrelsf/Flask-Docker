@@ -2,6 +2,7 @@ import docker
 from flask import Flask, render_template, request, redirect, session
 
 client_docker = docker.from_env()
+
 app = Flask(__name__, template_folder="templates", static_folder="templates/static")
 app.secret_key = "PythonDevKey"
 
@@ -10,12 +11,7 @@ app.secret_key = "PythonDevKey"
 def index():
     try:
         session['counter'] += 1
-        dict_conteiners = {}
         conteiners = client_docker.api.containers()
-        # for conteiner in conteiners:
-        #     dict_conteiners[conteiner['Names'][0].strip('/')] = conteiner['Names'][0].strip('/')
-        #     dict_conteiners[conteiner['State']] = conteiner['State']
-        print(dict_conteiners)
     except:
         session['counter'] = 0
     return render_template('index.html', conteiners=conteiners)
@@ -30,13 +26,14 @@ def contact():
     return render_template('contact.html')
 
 
-@app.route('/add', methods = ['POST'])
+@app.route('/docker_images', methods = ['GET'])
 def add():
     try:
-        session['counter'] += 2
+        session['counter'] += 1
+        images = client_docker.api.images()
     except:
         session['counter'] = 0
-    return render_template('add.html')
+    return render_template('docker_images.html', images=images)
 
 
 @app.route('/reset', methods = ['POST'])
